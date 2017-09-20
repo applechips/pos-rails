@@ -9,4 +9,4 @@
 r1 = Role.create(:name => 'user')
 r2 = Role.create(:name => 'admin')
 us1 = User.create(:email => 'user@user.com', :password => 'secret', :role_id => r1.id)
-use = User.create(:email => 'admin@admin.com', :password => 'secret', :role_id => r2.id)
+us2 = User.create(:email => 'admin@admin.com', :password => 'secret', :role_id => r2.id)
