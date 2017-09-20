@@ -1,4 +1,4 @@
-<%= form_with(model: sale, local: true) do |form| %>
+<%= form_with(model: sale, local: true) do |f| %>
   <% if sale.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
@@ -12,16 +12,31 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :sale_name %>
+    <%= f.label :name %>
+    <%= f.text_field :name, id: :sale_name %>
   </div>
-
-  <div class="field">
-    <%= form.label :total %>
-    <%= form.text_field :total, id: :sale_total %>
-  </div>
-
+  <%= f.fields_for :items do |builder| %>
+    <%= render 'item_fields', f: builder %>
+  <% end %>
+<%= link_to_add_fields "Add Item", f, :items %>
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+jQuery(function() {
+ $('form').on('click', '.remove_fields', function(event) {
+ $(this).prev('input[type=hidden]').val('1');
+ $(this).closest('fieldset').hide();
+ return event.preventDefault();
+ });
+ return $('form').on('click', '.add_fields', function(event) {
+ var regexp, time;
+ time = new Date().getTime();
+ regexp = new RegExp($(this).data('id'), 'g');
+ $(this).before($(this).data('fields').replace(regexp, time));
+ return event.preventDefault();
+ });
+});
+</script>

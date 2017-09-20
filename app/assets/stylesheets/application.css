@@ -17,3 +17,7 @@
 body {
     padding-top: 70px;
 }
+
+.item-fields label {
+  display: inline-block;
+}
